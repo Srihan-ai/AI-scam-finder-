@@ -1,0 +1,9 @@
+/* ScamGuard AI — minimal global overrides */
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background-color: #7c3aed;
+  color: #fff;
+}
