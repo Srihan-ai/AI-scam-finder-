@@ -1,6 +1,9 @@
 import React from 'react';
 import { ShieldX, ShieldAlert, ShieldCheck } from 'lucide-react';
 
+// Fallback verdict derivation for history items saved before the backend emitted
+// verdict/verdictDescription fields. Thresholds MUST stay in sync with
+// backend/analyzers/aiExplainer.js: >=60 → FAKE, >=35 → SUSPICIOUS, <35 → REAL.
 function deriveVerdict(riskScore) {
   if (riskScore >= 60) {
     return {

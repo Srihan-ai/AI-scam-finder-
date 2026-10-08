@@ -43,7 +43,7 @@ export default function Navbar({ onOpenHistory, historyCount }) {
             )}
           </button>
 
-          {/* Emergency Helpline Pill */}
+          {/* Emergency Helpline Pill — intentional UX safety feature, kept per spec */}
           <a
             href="tel:1930"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-300 bg-emerald-950/60 border border-emerald-500/40 hover:bg-emerald-900/40 transition-all"
