@@ -30,16 +30,14 @@ export default function ScannerInput({
     if (['png', 'jpg', 'jpeg', 'webp', 'gif'].includes(ext)) {
       setInput(`[Image file: ${file.name}] User uploaded a screenshot for scam analysis.`);
       setUploadedFileName(file.name);
+    } else if (ext === 'pdf') {
+      // PDFs are binary — never attempt text extraction; use sentinel unconditionally
+      setInput(`[PDF file: ${file.name}] User uploaded a PDF document for scam analysis.`);
+      setUploadedFileName(file.name);
     } else {
       const reader = new FileReader();
       reader.onload = (e) => {
-        let text = e.target.result;
-        if (ext === 'pdf') {
-          text = text.replace(/[^\x20-\x7E\n\r\t]/g, ' ').replace(/\s+/g, ' ').trim();
-          if (text.length < 20) {
-            text = `[PDF file: ${file.name}] User uploaded a PDF document for scam analysis.`;
-          }
-        }
+        const text = e.target.result;
         setInput(text.slice(0, 4000));
       };
       reader.readAsText(file);
