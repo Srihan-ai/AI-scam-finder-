@@ -62,18 +62,18 @@ export default function VerdictCard({ verdict, verdictDescription, riskScore, de
 
   return (
     <div
-      className={`rounded-2xl border p-6 sm:p-8 backdrop-blur-xl flex flex-col items-center text-center ${cardClass}`}
+      className={`rounded-2xl border p-4 sm:p-5 backdrop-blur-xl flex flex-col items-center text-center ${cardClass}`}
     >
       {/* Shield Icon */}
-      <Icon className="w-16 h-16 mb-4" style={{ color: theme.color }} />
+      <Icon className="w-8 h-8 mb-2" style={{ color: theme.color }} />
 
       {/* Verdict Word */}
-      <div className={`text-6xl sm:text-8xl font-black tracking-tighter mb-3 ${textClass}`}>
+      <div className={`text-4xl sm:text-5xl font-black tracking-tighter mb-2 ${textClass}`}>
         {resolvedVerdict}
       </div>
 
       {/* Description */}
-      <p className="text-base text-slate-300 max-w-xl mb-5 leading-relaxed">
+      <p className="text-sm text-slate-300 max-w-xl mb-3 leading-relaxed">
         {resolvedDescription}
       </p>
 

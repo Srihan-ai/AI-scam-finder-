@@ -113,7 +113,7 @@ export default function App() {
         {/* Hero Section */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight mb-4">
-            Paste it. We&apos;ll tell you if it&apos;s{' '}
+            Check Before You Click {' '}
             <span className="text-[#ef4444]">FAKE</span>
             {' '}or{' '}
             <span className="text-[#22c55e]">REAL</span>.

@@ -1,0 +1,15 @@
+{
+  "name": "ai-scam-checker",
+  "version": "1.0.0",
+  "description": "Full Stack AI Scam Checker - Link, Message, & UPI Fraud Analysis Platform",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "backend": "node backend/server.js",
+    "frontend": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "test": "node backend/test.js"
+  },
+  "author": "ScamGuard AI Team",
+  "license": "MIT"
+}
