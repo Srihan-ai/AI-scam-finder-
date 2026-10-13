@@ -61,7 +61,8 @@ export default function App() {
     setIsScanning(true);
 
     try {
-      const response = await fetch('/api/scan', {
+      const API_BASE = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${API_BASE}/api/scan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ input: targetInput, scanType: targetType }),
