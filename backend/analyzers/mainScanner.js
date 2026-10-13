@@ -2,22 +2,39 @@ const { analyzeUrl } = require('./urlAnalyzer');
 const { analyzeUpi } = require('./upiAnalyzer');
 const { analyzeMessage } = require('./messageAnalyzer');
 const { generateAiExplanation } = require('./aiExplainer');
+const { normalizeAdversarialText } = require('./adversarialNormalizer');
 
 /**
  * Intelligent Multi-Modal Scanner
- * Automatically detects whether input is a Link, UPI request, or Message,
- * evaluates all embedded vectors, and returns comprehensive risk assessment.
+ * Integrates adversarial text normalization (homoglyphs, zero-width spaces, leetspeak, spaced keywords),
+ * evaluates URL, UPI, and SMS/WhatsApp attack vectors, and computes comprehensive risk assessment.
  */
 function scanContent(rawInput, userForcedType = null) {
-  const input = rawInput.trim();
+  if (!rawInput || typeof rawInput !== 'string') {
+    return {
+      scanId: 'SCAM-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
+      timestamp: new Date().toISOString(),
+      inputPreview: '',
+      detectedType: 'UNKNOWN',
+      riskScore: 0,
+      riskLevel: 'SAFE',
+      flags: [],
+      aiExplanation: generateAiExplanation({ inputType: 'UNKNOWN', riskScore: 0, riskLevel: 'SAFE', flags: [] })
+    };
+  }
+
+  // 1. Adversarial Evasion Normalization
+  const { normalizedText, evasionFlags } = normalizeAdversarialText(rawInput.trim());
+  const input = normalizedText;
+
   let detectedType = 'MESSAGE';
   let primaryAnalysis = null;
   let secondaryAnalyses = [];
 
   // Determine Type if not forced
-  const isExplicitUrl = /^(https?:\/\/|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/|$))/i.test(input) && !input.includes(' ') && input.length < 256;
+  const isExplicitUrl = /^(https?:\/\/|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/|$))/i.test(input) && !input.includes(' ') && input.length < 512;
   const isUpiUri = input.toLowerCase().startsWith('upi://') || /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/.test(input);
-  const mentionsUpiPin = /(?:enter\s+(?:upi\s+)?pin|approve\s+collect|scan\s+qr.*receive|vpa|@ok|@paytm|@ybl)/i.test(input);
+  const mentionsUpiPin = /(?:enter\s+(?:upi\s+)?pin|approve\s+collect|scan\s+qr.*receive|vpa|@ok|@paytm|@ybl|daalein.*pin)/i.test(input);
 
   if (userForcedType === 'URL' || (userForcedType !== 'UPI' && userForcedType !== 'MESSAGE' && isExplicitUrl)) {
     detectedType = 'URL';
@@ -48,9 +65,14 @@ function scanContent(rawInput, userForcedType = null) {
     }
   }
 
-  // Aggregate results and flags
-  let combinedFlags = [...(primaryAnalysis.flags || [])];
+  // Aggregate results and flags, including adversarial evasion flags
+  let combinedFlags = [...evasionFlags, ...(primaryAnalysis.flags || [])];
   let finalRiskScore = primaryAnalysis.riskScore || 10;
+
+  // Add weight if adversarial evasion was detected
+  if (evasionFlags.length > 0) {
+    finalRiskScore = Math.max(finalRiskScore, 85);
+  }
 
   for (const sub of secondaryAnalyses) {
     if (sub.flags && sub.flags.length > 0) {
@@ -95,7 +117,7 @@ function scanContent(rawInput, userForcedType = null) {
   return {
     scanId: 'SCAM-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
     timestamp: new Date().toISOString(),
-    inputPreview: input.length > 180 ? input.substring(0, 180) + '...' : input,
+    inputPreview: rawInput.length > 180 ? rawInput.substring(0, 180) + '...' : rawInput,
     detectedType,
     riskScore: finalRiskScore,
     riskLevel: finalRiskLevel,

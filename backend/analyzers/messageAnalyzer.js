@@ -1,6 +1,7 @@
 /**
  * Message and Text Pattern Analyzer
  * Detects SMS, WhatsApp, and Telegram fraud patterns across banking, utility, job, lottery, UPI, and digital arrest vectors.
+ * Supports English and Hinglish / Regional Indian scam patterns.
  */
 
 const SCAM_CATEGORIES = [
@@ -8,9 +9,9 @@ const SCAM_CATEGORIES = [
     id: 'UPI_REVERSE_CHARGE',
     name: 'UPI Reverse Charge / PIN Receive Trap',
     patterns: [
-      /(?:enter|type|give|submit)\s+(?:your\s+)?(?:upi\s+)?(?:m?pin|pin|code)[\s\w,]{0,45}(?:receive|get|claim|credit|accept|collect)/i,
-      /(?:receive|claim|get|credit|collect)\s+[\w\s,]{0,35}(?:enter|type|submit)\s+(?:your\s+)?(?:upi\s+)?(?:m?pin|pin)/i,
-      /(?:scan|scan\s+this)\s+(?:qr|code)[\s\w,]{0,35}(?:receive|get\s+money|claim|credit)/i,
+      /(?:enter|type|give|submit|daalein|daalo)\s+(?:your\s+)?(?:upi\s+)?(?:m?pin|pin|code)[\s\w,]{0,45}(?:receive|get|claim|credit|accept|collect|paane\s+ke\s+liye)/i,
+      /(?:receive|claim|get|credit|collect|paise\s+lene)\s+[\w\s,]{0,35}(?:enter|type|submit|daalein)\s+(?:your\s+)?(?:upi\s+)?(?:m?pin|pin)/i,
+      /(?:scan|scan\s+this)\s+(?:qr|code)[\s\w,]{0,35}(?:receive|get\s+money|claim|credit|paise\s+paane)/i,
       /approve\s+(?:collect\s+request|request)[\s\w,]{0,35}(?:receive|get|claim)/i,
       /enter\s+pin\s+for\s+(?:refund|cashback|bonus)/i
     ],
@@ -22,11 +23,11 @@ const SCAM_CATEGORIES = [
     id: 'ELECTRICITY_SCAM',
     name: 'Electricity / Utility Disconnection Threat',
     patterns: [
-      /(?:electricity|power)\s+(?:will\s+be\s+)?(?:disconnected|cut|terminated|shut\s+off)/i,
-      /(?:previous|last)\s+month\s+bill\s+not\s+(?:updated|paid)/i,
-      /(?:tonight\s+at\s+)?(?:9:?30|8:?30|10:?00)\s*(?:pm|hours)/i,
-      /contact\s+(?:electricity\s+)?officer/i,
-      /(?:bescom|mahadiscom|tneb|uppcl|dhbvn|bses)\s+(?:helpline|bill|payment)/i
+      /(?:electricity|power|bijli|light)\s+(?:will\s+be\s+)?(?:disconnected|cut|terminated|shut\s+off|kaat\s+di\s+jayegi|band\s+kar\s+di)/i,
+      /(?:previous|last|pichhle)\s+month\s+bill\s+not\s+(?:updated|paid|jama)/i,
+      /(?:tonight\s+at\s+|aaj\s+raat\s+)?(?:9:?30|8:?30|10:?00)\s*(?:pm|hours|baje)/i,
+      /(?:contact|call|sampark\s+karein)\s+(?:electricity\s+)?officer/i,
+      /(?:bescom|mahadiscom|tneb|uppcl|dhbvn|bses|nbpdcl|sbpdcl)\s+(?:helpline|bill|payment|officer)/i
     ],
     requiredMatches: 2,
     baseScore: 94,
@@ -36,11 +37,11 @@ const SCAM_CATEGORIES = [
     id: 'KYC_BANK_SUSPENSION',
     name: 'Bank Account / KYC / PAN Card Suspension',
     patterns: [
-      /(?:account|card|sim|netbanking)\s+(?:has\s+been\s+)?(?:blocked|suspended|deactivated|frozen|hold)/i,
-      /(?:update|link|verify)\s+(?:your\s+)?(?:kyc|pan|aadhaar|pan\s+card)/i,
-      /(?:sbi|hdfc|icici|axis|pnb|bob|kotak|canara)\s+(?:customer|account|user)/i,
-      /(?:mandatory|immediately)\s+(?:update|click|verify)/i,
-      /click\s+(?:here|link)\s+to\s+(?:avoid|unblock|activate|update)/i
+      /(?:account|card|sim|netbanking|khata)\s+(?:has\s+been\s+)?(?:blocked|suspended|deactivated|frozen|hold|band\s+ho\s+gaya)/i,
+      /(?:update|link|verify|jodein)\s+(?:your\s+)?(?:kyc|pan|aadhaar|pan\s+card)/i,
+      /(?:sbi|hdfc|icici|axis|pnb|bob|kotak|canara|yono)\s+(?:customer|account|user|khata)/i,
+      /(?:mandatory|immediately|turant|aaj\s+hi)\s+(?:update|click|verify|karein)/i,
+      /click\s+(?:here|link)\s+to\s+(?:avoid|unblock|activate|update|chaloo\s+karein)/i
     ],
     requiredMatches: 2,
     baseScore: 95,
@@ -50,12 +51,12 @@ const SCAM_CATEGORIES = [
     id: 'TASK_JOB_SCAM',
     name: 'Task-Based Part-Time Job / YouTube Like Scam',
     patterns: [
-      /(?:part\s*time\s*job|work\s*from\s*home|freelance\s*job)/i,
-      /(?:earn|salary|daily\s*income)\s*(?:rs\.?|inr|₹)?\s*(?:[1-9][0-9]{2,4})\s*(?:to|-)\s*(?:[1-9][0-9]{3,5})?/i,
+      /(?:part\s*time\s*job|work\s*from\s*home|freelance\s*job|ghar\s*baithe\s*kamao)/i,
+      /(?:earn|salary|daily\s*income|kamao)\s*(?:rs\.?|inr|₹)?\s*(?:[1-9][0-9]{2,4})\s*(?:to|-)?\s*(?:[1-9][0-9]{3,5})?/i,
       /(?:like|subscribe)\s+(?:youtube\s+videos|channels)/i,
       /(?:rate|review)\s+(?:hotels|products|google\s+maps)/i,
       /(?:contact|telegram|whatsapp)\s+(?:hr|manager|receptionist|mentor)/i,
-      /(?:daily\s+payment|instant\s+withdrawal|prepaid\s+task)/i
+      /(?:daily\s+payment|instant\s+withdrawal|prepaid\s+task|roj\s+kamayein)/i
     ],
     requiredMatches: 2,
     baseScore: 90,
@@ -93,7 +94,7 @@ const SCAM_CATEGORIES = [
     id: 'LOTTERY_KBC_SCAM',
     name: 'Lottery / KBC All-India Lucky Draw Fraud',
     patterns: [
-      /(?:congratulations|lucky\s*draw|winner|lottery)/i,
+      /(?:congratulations|lucky\s*draw|winner|lottery|inam|badhai\s+ho)/i,
       /(?:kbc|kaun\s+banega\s+crorepati|tata\s+safari|25\s+lakh|cheque)/i,
       /(?:call\s+rana\s+pratap|contact\s+manager|claim\s+number)/i,
       /(?:deposit\s+gst|processing\s+fee|clearance\s+charge)/i
@@ -119,7 +120,7 @@ const SCAM_CATEGORIES = [
     id: 'REMOTE_APP_MALWARE',
     name: 'Remote Access Tool / Malicious APK Trap',
     patterns: [
-      /(?:download|install)\s+(?:apk|app|application)/i,
+      /(?:download|install|load)\s+(?:apk|app|application)/i,
       /(?:anydesk|teamviewer|quicksupport|rustdesk|screen\s+share)/i,
       /(?:sbi_yono\.apk|kyc_update\.apk|electric_bill\.apk)/i,
       /(?:grant\s+permission|accessibility\s+service)/i
@@ -132,17 +133,21 @@ const SCAM_CATEGORIES = [
 
 const PSYCHOLOGICAL_PRESSURE_WORDS = [
   { phrase: 'immediately', weight: 8 },
+  { phrase: 'turant', weight: 8 },
   { phrase: 'urgent', weight: 10 },
   { phrase: 'within 24 hours', weight: 12 },
   { phrase: 'tonight', weight: 10 },
+  { phrase: 'aaj raat', weight: 10 },
   { phrase: 'last warning', weight: 15 },
+  { phrase: 'aakhiri chetavani', weight: 15 },
   { phrase: 'final notice', weight: 15 },
   { phrase: 'account will be closed', weight: 15 },
   { phrase: 'legal action', weight: 15 },
   { phrase: 'police complaint', weight: 15 },
   { phrase: 'do not disclose', weight: 12 },
   { phrase: 'share otp', weight: 25 },
-  { phrase: 'tell otp', weight: 25 }
+  { phrase: 'tell otp', weight: 25 },
+  { phrase: 'otp batao', weight: 25 }
 ];
 
 function analyzeMessage(text) {
@@ -191,7 +196,7 @@ function analyzeMessage(text) {
     });
   }
 
-  if (/share\s+(?:your\s+)?otp|send\s+(?:me\s+)?(?:the\s+)?otp|verify\s+(?:with\s+)?otp/i.test(lowerText)) {
+  if (/share\s+(?:your\s+)?otp|send\s+(?:me\s+)?(?:the\s+)?otp|verify\s+(?:with\s+)?otp|otp\s+batao/i.test(lowerText)) {
     highestScore = 99;
     flags.push({
       severity: 'CRITICAL',
@@ -203,7 +208,7 @@ function analyzeMessage(text) {
   const urlRegex = /(https?:\/\/[^\s]+|[a-zA-Z0-9-]+\.(?:xyz|top|site|online|club|click|apk|link|cc|app|work)[^\s]*)/gi;
   const extractedUrls = text.match(urlRegex) || [];
 
-  const phoneRegex = /(?:\+?91[\-\s]?)?[6-9]\d{9}/g;
+  const phoneRegex = /(?:\+?91[\-\s]?)?[6-9](?:[\-\s]?\d){9}/g;
   const extractedPhones = text.match(phoneRegex) || [];
 
   let riskLevel = 'LOW';

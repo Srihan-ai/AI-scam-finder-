@@ -99,7 +99,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#07090f] text-slate-100 bg-grid-pattern flex flex-col">
+    <div className="min-h-screen bg-[#111318] text-slate-100 flex flex-col">
 
       {/* Navbar */}
       <Navbar
@@ -119,7 +119,7 @@ export default function App() {
             <span className="text-[#22c55e]">REAL</span>.
           </h1>
           <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-            Scam links, messages, screenshots — analyzed in seconds.
+            Scam links, messages, screenshots, files — analyzed in seconds.
           </p>
         </div>
 
@@ -157,15 +157,15 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-slate-800 bg-[#060910] py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
+      <footer className="w-full border-t border-slate-800 bg-[#121212] py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
 
           <div className="flex flex-col items-center md:items-start gap-1.5">
             <div className="flex items-center gap-2 text-slate-300 font-bold text-sm">
               <ShieldCheck className="w-4 h-4 text-violet-400" />
-              <span>ScamGuard AI Platform</span>
+              <span>Smarter Detection. Safer Decisions.</span>
             </div>
-            <p>Empowering digital safety with explainable AI heuristic threat intelligence.</p>
+            <p>AI-powered threat detection that helps you understand suspicious digital content.</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-slate-400">
