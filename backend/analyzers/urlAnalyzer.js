@@ -12,7 +12,7 @@ const SUSPICIOUS_TLDS = [
 
 // Official verified brand apex domains
 const OFFICIAL_BRAND_DOMAINS = {
-  sbi: ['sbi.co.in', 'onlinesbi.sbi', 'sbi.bank', 'statebankofindia.com'],
+  sbi: ['sbi.co.in', 'onlinesbi.sbi', 'sbi.bank', 'statebankofindia.com', 'sbi.bank.in'],
   hdfc: ['hdfcbank.com', 'hdfc.com'],
   icici: ['icicibank.com'],
   axis: ['axisbank.com'],
@@ -30,8 +30,6 @@ const OFFICIAL_BRAND_DOMAINS = {
   cybercrime: ['cybercrime.gov.in'],
   npci: ['npci.org.in']
 };
-
-// Verified authentic domains (whitelist)
 const VERIFIED_AUTHENTIC_DOMAINS = [
   'google.com', 'google.co.in', 'youtube.com', 'microsoft.com', 'apple.com',
   'amazon.in', 'amazon.com', 'flipkart.com', 'sbi.co.in', 'onlinesbi.sbi',

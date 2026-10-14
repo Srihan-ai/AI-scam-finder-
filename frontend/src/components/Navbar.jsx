@@ -15,7 +15,7 @@ export default function Navbar({ onOpenHistory, historyCount }) {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-100 to-violet-300 bg-clip-text text-transparent">
-                ScamGuard{' '}
+                ScamCheck{' '}
                 <span className="text-violet-400 font-mono text-sm px-1.5 py-0.5 rounded bg-violet-950/80 border border-violet-500/30">
                   AI
                 </span>
